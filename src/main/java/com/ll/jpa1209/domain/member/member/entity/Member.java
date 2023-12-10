@@ -8,19 +8,24 @@ import jakarta.persistence.Id;
 import lombok.*;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
+//9강, 모든 엔티티가 가져야할 공통 속성을 모아두는 클래스 BaseEntity 도입
+import com.ll.jpa1209.global.jpa.baseEntity.BaseEntity;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
 
 @Entity
-@NoArgsConstructor(access = PROTECTED)
+@SuperBuilder
 @AllArgsConstructor(access = PROTECTED)
-@Builder
-@Getter
+@NoArgsConstructor(access =PROTECTED)
 @Setter
-@EqualsAndHashCode
-public class Member {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @EqualsAndHashCode.Include
-    private Long id;
+@Getter
+@ToString(callSuper = true)
+public class Member extends BaseEntity {
+
     private String username;
     private String password;
+
+
+
 }
