@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 //23 11 28, p 13200, 5강, 파트 1, 1부
 import java.util.Optional;
+// 10강, 파트 1, 2부
+import java.time.LocalDateTime;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -18,6 +20,8 @@ public class MemberService {
     @Transactional
     public RsData<Member> join(String username, String password) {
         Member member = Member.builder()
+
+                .modifyDate(LocalDateTime.now())
                 .username(username)
                 .password(password)
                 .build();

@@ -12,7 +12,8 @@ import static lombok.AccessLevel.PROTECTED;
 import com.ll.jpa1209.global.jpa.baseEntity.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
+// 10강, 파트 1, 2부
+import java.time.LocalDateTime;
 
 @Entity
 @SuperBuilder

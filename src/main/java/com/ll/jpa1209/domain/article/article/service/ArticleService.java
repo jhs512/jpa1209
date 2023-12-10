@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 //23 11 28, p 13200, 5강, 파트 1, 1부
 import java.util.Optional;
 import com.ll.jpa1209.domain.member.member.entity.Member;
+// 10강, 파트 1, 2부
+import java.time.LocalDateTime;
 
 @Service
 @Transactional(readOnly = true)
@@ -20,6 +22,7 @@ public class ArticleService {
     @Transactional
     public RsData<Article> write(long authorId , String title, String body) {
         Article article = Article.builder()
+                .modifyDate(LocalDateTime.now())
                 .author(Member.builder().id(authorId).build())
                 .title(title)
                 .body(body)
@@ -31,5 +34,11 @@ public class ArticleService {
     }
     public Optional<Article> findById(long id){
         return articleRepository.findById(id);
+    }
+    @Transactional
+    public void modify(Article article, String title , String body){
+        article.setTitle(title);
+        article.setBody(body);
+
     }
 }

@@ -20,6 +20,8 @@ import com.ll.jpa1209.global.jpa.baseEntity.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.experimental.SuperBuilder;
+// 10강, 파트 1, 2부
+import java.time.LocalDateTime;
 @Entity
 @SuperBuilder
 @AllArgsConstructor(access = PROTECTED)
@@ -28,6 +30,8 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @ToString(callSuper = true)
 public class Article extends BaseEntity {
+
+
     @ManyToOne(fetch = LAZY)
     private Member author;
     private String title;
