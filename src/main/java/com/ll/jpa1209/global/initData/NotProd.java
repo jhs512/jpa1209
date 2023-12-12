@@ -70,6 +70,12 @@ public class NotProd {
         article2.addComment(member1,"댓글4");
         article2.addComment(member1,"댓글5");
 
+        article1.addTag("자바");
+        article1.addTag("백엔드");
+        article2.addTag("프레임워크");
+        article2.addTag("스프링부트");
+        article2.addTag("프레임워크","스프링부트");
+
 
 
     }

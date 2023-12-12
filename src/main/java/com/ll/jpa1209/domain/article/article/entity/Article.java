@@ -33,6 +33,8 @@ import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 import static jakarta.persistence.CascadeType.ALL;
+// 25강, 게시물 태그 추가
+import com.ll.jpa1209.domain.article.articleTag.entity.ArticleTag;
 
 @Entity
 @SuperBuilder
@@ -51,6 +53,9 @@ public class Article extends BaseEntity {
     @Builder.Default
     private List<ArticleComment> comments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "article", cascade = ALL , orphanRemoval = true)
+    @Builder.Default
+    private List<ArticleTag> tags = new ArrayList<>();
     public void addComment(Member commentAuthor, String commentBody){
         ArticleComment comment = ArticleComment.builder()
                 .article(this)
@@ -58,10 +63,22 @@ public class Article extends BaseEntity {
                 .body(commentBody)
                 .build();
 
-        comment.add(comment);
+        comments.add(comment);
     }
 
     public void removeComment(ArticleComment comment){
         comments.remove(comment);
+    }
+    public void addTag(String tagContent){
+        ArticleTag tag = ArticleTag.builder()
+                .article(this)
+                .content(tagContent)
+                .build();
+        tags.add(tag);
+    }
+    public void addTag(String...tagContents){
+        for (String tagContent : tagContents){
+            addTag(tagContent);
+        }
     }
 }
