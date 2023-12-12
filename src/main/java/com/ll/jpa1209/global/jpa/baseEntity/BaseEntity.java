@@ -26,7 +26,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 @SuperBuilder
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-@EqualsAndHashCode
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 public class BaseEntity {
     @Id
