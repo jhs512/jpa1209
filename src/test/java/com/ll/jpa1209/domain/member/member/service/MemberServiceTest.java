@@ -12,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.assertThat;
 //12강, 파트 1, 4부
 import com.ll.jpa1209.domain.article.articleCommnet.entity.ArticleComment;
-
+// 21강, 파트 2, 게시물 리스트 출력시, 각 아이템의 댓글 수도 출력, 여기서 N + 1 문제가 발생
+import java.util.List;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -29,14 +30,14 @@ public class MemberServiceTest {
 
         assertThat(member.getId()).isGreaterThan(0L);
     }
-    @DisplayName("1번 글의 댓글들을 수정한다.")
+    @DisplayName("2번 글에 댓글들을 추가한다.")
     @Test
     void t5() {
-        Article article = articleService.findById(1L).get();
-        article.getComments().forEach(comment -> {
-            articleService.modifyComment(comment, comment.getBody() + "!!");
+        Member member1 = memberService.findById(1L).get();
+        Article article2 = articleService.findById(2L).get();
 
-        });
+        article2.addComment(member1, "댓글3");
+
     }
     @DisplayName("1번 글의 댓글 중 마지막 것을 삭제한다.")
     @Test

@@ -14,6 +14,8 @@ import com.ll.jpa1209.domain.member.member.entity.Member;
 import java.time.LocalDateTime;
 //12강, 파트 1, 4부
 import com.ll.jpa1209.domain.article.articleCommnet.entity.ArticleComment;
+//21강, 파트 2, 게시물 리스트 출력시, 각 아이템의 댓글 수도 출력, 여기서 N + 1 문제가 발생
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -35,12 +37,16 @@ public class ArticleService {
         return RsData.of("200", "%d번 게시글이 작성되었습니다.".formatted(article.getId()), article);
     }
     public Optional<Article> findById(long id){
+
         return articleRepository.findById(id);
     }
     @Transactional
     public void modify(Article article, String title , String body){
         article.setTitle(title);
         article.setBody(body);
+    }
+    public List<Article> findAll(){
+        return articleRepository.findByOrderByIdDesc();
     }
 
 }

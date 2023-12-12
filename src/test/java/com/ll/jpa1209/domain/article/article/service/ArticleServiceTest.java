@@ -21,6 +21,8 @@ import com.ll.jpa1209.standard.util.Ut;
 //13강, OneToMany 필드 없이도 똑같은 일을 할 수 있습니다.
 import com.ll.jpa1209.domain.member.member.service.MemberService;
 
+import java.util.List;
+
 // 13강, OneToMany 필드 없이도 똑같은 일을 할 수 있습니다.
 
 
@@ -78,13 +80,24 @@ public class ArticleServiceTest {
         article1.getComments().getLast().setBody("수정된 댓글");
 
     }
-    @DisplayName("1번 글에 댓글 중 마지막 것을 삭제한다.")
+    @DisplayName("1번 글의 댓글 중 마지막 것을 삭제한다.")
     @Test
     void t7(){
         Article article1 = articleService.findById(1L).get();
 
         ArticleComment lastComment = article1.getComments().getLast();
         article1.removeComment(lastComment);
+    }
+    @DisplayName("게시물 별 댓글 수 출력")
+    @Test
+    void t8(){
+        List<Article> articles = articleService.findAll();
+
+        articles.forEach(article ->{
+            System.out.println("게시물번호:" + article.getId());
+            System.out.println("댓글 수:" + article.getComments().size());
+
+        });
     }
 
 }
