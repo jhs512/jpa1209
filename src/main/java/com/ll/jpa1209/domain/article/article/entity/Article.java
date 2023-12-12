@@ -22,6 +22,12 @@ import jakarta.persistence.ManyToOne;
 import lombok.experimental.SuperBuilder;
 // 10강, 파트 1, 2부
 import java.time.LocalDateTime;
+// 11강, 파트 1, 3부
+import com.ll.jpa1209.domain.article.articleCommnet.entity.ArticleComment;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @SuperBuilder
 @AllArgsConstructor(access = PROTECTED)
@@ -31,10 +37,8 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 public class Article extends BaseEntity {
 
-
-    @ManyToOne(fetch = LAZY)
     private Member author;
     private String title;
-
+    private String body;
 
 }

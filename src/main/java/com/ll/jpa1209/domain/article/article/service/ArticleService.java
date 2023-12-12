@@ -12,6 +12,8 @@ import java.util.Optional;
 import com.ll.jpa1209.domain.member.member.entity.Member;
 // 10강, 파트 1, 2부
 import java.time.LocalDateTime;
+//12강, 파트 1, 4부
+import com.ll.jpa1209.domain.article.articleCommnet.entity.ArticleComment;
 
 @Service
 @Transactional(readOnly = true)
@@ -39,6 +41,6 @@ public class ArticleService {
     public void modify(Article article, String title , String body){
         article.setTitle(title);
         article.setBody(body);
-
     }
+
 }

@@ -2,6 +2,7 @@ package com.ll.jpa1209.domain.article.article.service;
 //23 11 27, p 13200, 3강, memberService.join, 2부, 테스트케이스 추가
 
 import com.ll.jpa1209.domain.article.article.entity.Article;
+import com.ll.jpa1209.domain.article.articleCommnet.entity.ArticleComment;
 import com.ll.jpa1209.global.rsData.RsData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,11 @@ import com.ll.jpa1209.domain.member.member.entity.Member;
 import com.ll.jpa1209.domain.member.member.service.MemberService;
 // 10강, 파트 1, 2부
 import com.ll.jpa1209.standard.util.Ut;
+//13강, OneToMany 필드 없이도 똑같은 일을 할 수 있습니다.
+import com.ll.jpa1209.domain.member.member.service.MemberService;
+import org.springframework.test.annotation.Rollback;
+// 13강, OneToMany 필드 없이도 똑같은 일을 할 수 있습니다.
+import com.ll.jpa1209.domain.article.articleCommnet.service.ArticleCommentService;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -24,6 +30,11 @@ import com.ll.jpa1209.standard.util.Ut;
 public class ArticleServiceTest {
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private MemberService memberService;
+    @Autowired
+    private ArticleCommentService articleCommentService;
+
     @DisplayName("글쓰기")
     @Test
     void t1() {
@@ -54,4 +65,29 @@ public class ArticleServiceTest {
         Article article_ = articleService.findById(1L).get();
         assertThat(article_.getTitle()).isEqualTo("수정된 제목");
     }
+    @DisplayName("2번 글에 댓글들을 추가한다.")
+    @Test
+    @Rollback(false)
+    void t5(){
+        Member member1 = memberService.findById(1L).get();
+        Article article2 = articleService.findById(2L).get();
+
+        articleCommentService.write(member1,article2,"댓글1");
+    }
+    @DisplayName("1번 글에 댓글들을 수정한다.")
+    @Test
+    void t6(){
+        ArticleComment comment = articleCommentService.findLatest().get();
+        articleCommentService.modify(comment,"new body");
+
+    }
+    @DisplayName("1번 글에 댓글 중 마지막 것을 삭제한다.")
+    @Test
+    void t7(){
+        ArticleComment comment = articleCommentService.findFirstByArticleIdORderByIdDesc(1L).get();
+        articleCommentService.delete(comment);
+    }
+
+
+
 }

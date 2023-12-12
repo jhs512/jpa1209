@@ -1,6 +1,7 @@
 package com.ll.jpa1209.global.initData;
 
 //23 11 27, p 13200, 3강, memberService.join, 1부, 구현
+import com.ll.jpa1209.domain.article.article.repository.ArticleRepository;
 import com.ll.jpa1209.domain.member.member.entity.Member;
 import com.ll.jpa1209.domain.member.member.service.MemberService;
 import com.ll.jpa1209.global.rsData.RsData;
@@ -10,23 +11,60 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 //23 11 28, p 13200, 5강, 파트 1, 1부
 import com.ll.jpa1209.domain.article.article.service.ArticleService;
+//11강, 파트 1, 3부
+import com.ll.jpa1209.domain.article.article.entity.Article;
+//11강, 파트 1, 3부
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.transaction.annotation.Transactional;
+//11강, 파트 1, 3부
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.transaction.annotation.Transactional;
+//12강, 파트 1, 4부
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+//13강, OneToMany 필드 없이도 똑같은 일을 할 수 있습니다.
+import com.ll.jpa1209.domain.article.articleCommnet.service.ArticleCommentService;
+
+
 @Profile("!prod")
 @Configuration
+@RequiredArgsConstructor
 public class NotProd {
+    @Autowired
+    @Lazy
+    private NotProd self;
+    private final MemberService memberService;
+    private final ArticleService articleService;
+    private final ArticleCommentService articleCommentService;
+
     @Bean
-    public ApplicationRunner initNotProdData(
-            MemberService memberService,
-            ArticleService articleService
-    ) {
+    public ApplicationRunner initNotProdData(){
         return args -> {
-            Member member1 = memberService.join("user1", "1234").getData();
-            Member member2 = memberService.join("user2", "1234").getData();
-
-            articleService.write(member1.getId(), "제목1", "내용1");
-            articleService.write(member1.getId(), "제목2", "내용2");
-
-            articleService.write(member2.getId(), "제목3", "내용3");
-            articleService.write(member2.getId(), "제목4", "내용4");
+            self.work1();
+            self.work2();
         };
     }
+    @Transactional
+    public void work1(){
+        Member member1 = memberService.join("user1", "1234").getData();
+        Member member2 = memberService.join("user2", "1234").getData();
+
+        Article article1 = articleService.write(member1.getId(), "제목1", "내용1").getData();
+        Article article2 = articleService.write(member1.getId(), "제목2", "내용2").getData();
+
+        Article article3 = articleService.write(member2.getId(), "제목3", "내용3").getData();
+        Article article4 = articleService.write(member2.getId(), "제목4", "내용4").getData();
+
+    }
+    @Transactional
+    public void work2(){
+        Member member1 = memberService.findById(1L).get();
+        Article article1 = articleService.findById(1L).get();
+
+        articleCommentService.write(member1,article1,"댓글1");
+        articleCommentService.write(member1,article1,"댓글1");
+
+    }
+
 }
