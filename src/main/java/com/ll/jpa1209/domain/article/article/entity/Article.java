@@ -27,6 +27,12 @@ import com.ll.jpa1209.domain.article.articleCommnet.entity.ArticleComment;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+//14강, 다시 OneToMany 부활, OneToMany 사용여부는 취향의 영역
+import com.ll.jpa1209.domain.article.articleCommnet.entity.ArticleComment;
+import jakarta.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
+import static jakarta.persistence.CascadeType.ALL;
 
 @Entity
 @SuperBuilder
@@ -36,9 +42,26 @@ import java.util.List;
 @Getter
 @ToString(callSuper = true)
 public class Article extends BaseEntity {
-
+    @ManyToOne(fetch = LAZY)
     private Member author;
     private String title;
     private String body;
 
+    @OneToMany(mappedBy = "article", cascade = ALL , orphanRemoval = true)
+    @Builder.Default
+    private List<ArticleComment> comments = new ArrayList<>();
+
+    public void addComment(Member commentAuthor, String commentBody){
+        ArticleComment comment = ArticleComment.builder()
+                .article(this)
+                .author(commentAuthor)
+                .body(commentBody)
+                .build();
+
+        comment.add(comment);
+    }
+
+    public void removeComment(ArticleComment comment){
+        comments.remove(comment);
+    }
 }

@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 //13강, OneToMany 필드 없이도 똑같은 일을 할 수 있습니다.
-import com.ll.jpa1209.domain.article.articleCommnet.service.ArticleCommentService;
+
 
 
 @Profile("!prod")
@@ -36,7 +36,7 @@ public class NotProd {
     private NotProd self;
     private final MemberService memberService;
     private final ArticleService articleService;
-    private final ArticleCommentService articleCommentService;
+
 
     @Bean
     public ApplicationRunner initNotProdData(){
@@ -62,8 +62,8 @@ public class NotProd {
         Member member1 = memberService.findById(1L).get();
         Article article1 = articleService.findById(1L).get();
 
-        articleCommentService.write(member1,article1,"댓글1");
-        articleCommentService.write(member1,article1,"댓글1");
+        article1.addComment(member1,"댓글1");
+        article1.addComment(member1,"댓글2");
 
     }
 
