@@ -35,6 +35,9 @@ import java.util.List;
 import static jakarta.persistence.CascadeType.ALL;
 // 25강, 게시물 태그 추가
 import com.ll.jpa1209.domain.article.articleTag.entity.ArticleTag;
+// 26강, 게시물 태그를 # 을 구분자로 하여 하나의 문자열로 반환(getTagsStr 메서드 구현)
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Entity
 @SuperBuilder
@@ -81,4 +84,15 @@ public class Article extends BaseEntity {
             addTag(tagContent);
         }
     }
+    public String getTagsStr(){
+        String tagsStr = tags
+                .stream()
+                .map(ArticleTag::getContent)
+                .collect(Collectors.joining("#"));
+        if (tagsStr.isBlank()){
+            return "";
+        }
+        return "#" + tagsStr;
+    }
+
 }
