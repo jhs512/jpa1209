@@ -19,6 +19,7 @@ import static lombok.AccessLevel.PROTECTED;
 @ToString(callSuper = true)
 public class ArticleTag extends BaseEntity{
     @ManyToOne(fetch = LAZY)
-    private Article article;
+    private Article article; // article_id
     private String content;
+
 }

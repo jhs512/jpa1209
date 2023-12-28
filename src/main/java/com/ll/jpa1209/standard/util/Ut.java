@@ -5,10 +5,9 @@ package com.ll.jpa1209.standard.util;
 import lombok.SneakyThrows;
 
 public class Ut {
-    public static class Thread{
+    public static class thread{
         @SneakyThrows
-        public static void sleep(int milli){
+        public static void sleep(int milli) {
             Thread.sleep(milli);
         }
-    }
 }

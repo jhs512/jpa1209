@@ -3,6 +3,7 @@ package com.ll.jpa1209.domain.article.article.service;
 
 import com.ll.jpa1209.domain.article.article.entity.Article;
 import com.ll.jpa1209.domain.article.articleCommnet.entity.ArticleComment;
+import com.ll.jpa1209.domain.article.articleCommnet.service.ArticleCommentService;
 import com.ll.jpa1209.global.rsData.RsData;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,11 @@ import com.ll.jpa1209.domain.member.member.service.MemberService;
 import java.util.List;
 
 // 13강, OneToMany 필드 없이도 똑같은 일을 할 수 있습니다.
+// 30강, 1번 회원이 작성한 댓글 찾기, ArticleComment 에 author 필드가 있으니 쉽다.
+import com.ll.jpa1209.domain.article.articleCommnet.service.ArticleCommentService;
+//31강, 1번 회원이 게시물에 추가한 태그 찾기, findByArticle_authorId 도입
+import com.ll.jpa1209.domain.article.articleTag.entity.ArticleTag;
+import com.ll.jpa1209.domain.article.articleTag.Service.ArticleTagService;
 
 
 @SpringBootTest
@@ -34,6 +40,10 @@ public class ArticleServiceTest {
     private ArticleService articleService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private ArticleCommentService articleCommentService;
+    @Autowired
+    private ArticleTagService articleTagService;
 
     @DisplayName("글쓰기")
     @Test
@@ -113,6 +123,18 @@ public class ArticleServiceTest {
         Article article1 = articleService.findById(1L).get();
 
         System.out.println(article1);
+    }
+    @DisplayName("1번 회원이 작성한 댓글들")
+    @Test
+    void t11(){
+        List<ArticleComment> articleComments = articleCommentService.findByAuthorId(1L);
+        assertThat(articleComments.size()).isGreaterThan(0);
+    }
+    @DisplayName("1번 회원이 작성한 태그들")
+    @Test
+    void t12(){
+        List<ArticleTag> articleTags = articleTagService.findByAuthorId(1L);
+        assertThat(articleTags.size()).isGreaterThan(0);
     }
 
 }
