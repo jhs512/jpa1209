@@ -77,6 +77,7 @@ public class Article extends BaseEntity {
     public void addTag(String tagContent){
         ArticleTag tag = ArticleTag.builder()
                 .article(this)
+                .author(author)
                 .content(tagContent)
                 .build();
         tags.add(tag);

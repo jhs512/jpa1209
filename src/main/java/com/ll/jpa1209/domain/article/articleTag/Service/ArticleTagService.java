@@ -14,8 +14,10 @@ public class ArticleTagService {
     private final ArticleTagRepository articleTagRepository;
 
     public List<ArticleTag> findByAuthorId(long authorId){
-        return articleTagRepository.findArticle_authorId(authorId);
-
+        return articleTagRepository.findByAuthorId(authorId);
+    }
+    public List<ArticleTag> findByAuthorUsername(String username){
+        return articleTagRepository.findByAuthor_username(username);
     }
 
 
