@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 import com.ll.jpa1209.domain.article.articleCommnet.entity.ArticleComment;
 //21강, 파트 2, 게시물 리스트 출력시, 각 아이템의 댓글 수도 출력, 여기서 N + 1 문제가 발생
 import java.util.List;
+//37강, 게시물 리스트
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 @Transactional(readOnly = true)
@@ -48,5 +51,9 @@ public class ArticleService {
     public List<Article> findAll(){
         return articleRepository.findByOrderByIdDesc();
     }
+    public Page<Article> search(Pageable pageable){
+        return articleRepository.findAll(pageable);
+    }
+
 
 }
