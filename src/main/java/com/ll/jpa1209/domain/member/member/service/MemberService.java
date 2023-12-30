@@ -33,6 +33,8 @@ public class MemberService {
     public Optional<Member> findById(long id){
         return memberRepository.findById(id);
     }
-
+    public long count(){
+        return memberRepository.count();
+    }
 
 }
